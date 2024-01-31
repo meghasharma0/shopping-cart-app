@@ -1,11 +1,12 @@
 import './App.css';
 import React from 'react'
+import LoginSignup from './Pages/LoginSignup';
 
 const App = () => {
   return (
-    <div>
-      Hello
-    </div>
+    <>
+      <LoginSignup />
+    </>
   )
 }
 
