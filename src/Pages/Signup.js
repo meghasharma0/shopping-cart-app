@@ -149,6 +149,29 @@ const Signup = () => {
     }
   }, [selectedState]);
 
+  // VALIDATIONS
+  // Pincode validation
+  const handlePincode = () => {
+    let len = pincode.length;
+    if (len != 6){
+      alert("Incorrect pincode");
+      setPincode("");
+    }
+    setPincode(pincode);
+  }
+
+  // Password validation
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  }
+  const isWeakPassword = password.length < 8;
+
+  // Confirm password validation
+  const handleConfirmPassword = (e) => {
+    setCPass(e.target.value)
+  }
+  const passwordsMatch = password === cPass;
+
   return (
     <div>
       <section className="background-radial-gradient overflow-hidden">
@@ -245,19 +268,29 @@ const Signup = () => {
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                          <input type="text" className="form-control" placeholder='Pincode' onChange={(e) => setPincode(e.target.value)} />
+                          <input type="text" className="form-control" placeholder='Pincode' onChange={handlePincode} value={pincode} />
                         </div>
                       </div>
                     </div>
 
                     {/* Password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Password *' onChange={(e) => setPassword(e.target.value)} required />
+                      <input type="text" className="form-control" placeholder='Password *' onChange={handlePassword} value={password} required />
+                      {isWeakPassword && (
+                        <div className="weak-password-message">
+                          Password is too weak!
+                        </div>
+                      )}
                     </div>
 
                     {/* Confirm Password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Confirm Password *' onChange={(e) => setCPass(e.target.value)} required/>
+                      <input type="text" className="form-control" placeholder='Confirm Password *' onChange={handleConfirmPassword} value={cPass} required/>
+                      {!passwordsMatch && (
+                        <div className="password-mismatch-message">
+                          Passwords do not match!
+                        </div>
+                      )}
                     </div>
 
                     {/* Security Ques */}
