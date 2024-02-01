@@ -57,34 +57,38 @@ const HomePage = () => {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">SHOPLANE</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+      <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">SHOPLANE</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-3">
-              <li class="nav-item">
-                <p class="nav-link" onClick={handleClick}>Home</p>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-3">
+              <li className="nav-item">
+                <p className="nav-link" onClick={handleClick}>Home</p>
               </li>
-              <li class="nav-item">
-                <p class="nav-link" onClick={handleClothingClick}>Clothing</p>
+              <li className="nav-item">
+                <p className="nav-link" onClick={handleClothingClick}>Clothing</p>
               </li>
-              <li class="nav-item">
-                <p class="nav-link" onClick={handleAccessoriesClick}>Accessories</p>
+              <li className="nav-item">
+                <p className="nav-link" onClick={handleAccessoriesClick}>Accessories</p>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" onChange={(e) => setSearch(e.target.value)} value={search} aria-label="Search" />
-              <button class="btn btn-outline-success" type="submit" onClick={handleSearch}>Search</button>
+            <a className="nav-link me-3" href="#">
+              <i className="fas fa-shopping-cart"></i>
+              <span className="badge rounded-pill badge-notification bg-danger"> {cartNo} </span>
+            </a>
+            <form className="d-flex" role="search">
+              <input className="form-control me-2" type="search" placeholder="Search" onChange={(e) => setSearch(e.target.value)} value={search} aria-label="Search" />
+              <button className="btn btn-outline-success" type="submit" onClick={handleSearch}>Search</button>
             </form>
           </div>
         </div>
       </nav>
 
       {/* Main body */}
-      <main>
+      <main className='mt-5 pt-5'>
         <div className="container">
           <section>
             <div className="text-center">

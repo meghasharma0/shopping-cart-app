@@ -161,9 +161,14 @@ const Signup = () => {
       e.preventDefault();
     }
     localStorage.clear();
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-    localStorage.setItem("name", fname);
+    localStorage.setItem("Name", fname);
+    localStorage.setItem("Email", email);
+    localStorage.setItem("Password", password);
+    localStorage.setItem("Country", selectedCountry);
+    localStorage.setItem("State", selectedState);
+    localStorage.setItem("City", selectedCity);
+    localStorage.setItem("Pincode", pincode);
+    localStorage.setItem("SecurityQues", securityQues);
 
     // Navigate to login page
     navigate('/login');
@@ -202,7 +207,7 @@ const Signup = () => {
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                          <input type="text" className="form-control" placeholder='First Name *' onChange={(e) => setFname(e.target.value)} />
+                          <input type="text" className="form-control" placeholder='First Name *' onChange={(e) => setFname(e.target.value)} required />
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
@@ -292,7 +297,7 @@ const Signup = () => {
 
                     {/* Security Ques */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Childhood favourite song *' onChange={(e) => setSecurityQues(e.target.value)} />
+                      <input type="text" className="form-control" placeholder='Childhood favourite song *' onChange={(e) => setSecurityQues(e.target.value)} required />
                     </div>
 
                     {/* Login link */}

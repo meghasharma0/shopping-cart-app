@@ -4,6 +4,7 @@ import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
+import ResetPassword from "./Pages/ResetPassword";
 
 const App = () => {
 
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/home" element={<HomePage />}></Route>
+        <Route path="/resetPassword" element={<ResetPassword />}></Route>
       </Routes>
     </BrowserRouter>
     </>

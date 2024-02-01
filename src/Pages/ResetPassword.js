@@ -1,39 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const ResetPassword = () => {
 
-  // States
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+    // States
+    const [securityAns, setSecurityAns] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const navigate = useNavigate(); 
 
-  // Checking is email and password matches or not!
-  const isValid = () => {
+    // Checking the security ans correct or not!
+    const isValid = () => {
 
-    const em = localStorage.getItem("Email");
-    const ps = localStorage.getItem("Password");
-
-    if (em !== email || ps !== password){
-      alert("Invalid email or password");
-      setEmail("");
-      setPassword("");
-    } else{
-      navigate("/home");
-    }
-
-  }
-
-  useEffect(() => {
-  }, []);
-
-  // Handle Submit
-  const handleSubmit = (e) => {
-    if (e){
-      e.preventDefault();
-    }
-    isValid();
-  }
+        const sq = localStorage.getItem("SecurityQues");
+    
+        if (sq !== securityAns){
+          alert("Invalid security ans");
+          setSecurityAns("");
+        } else{
+          localStorage.setItem("Password", newPassword);
+          navigate("/login");
+        }
+    
+      }
+    
+      useEffect(() => {
+      }, []);
+    
+      // Handle Submit
+      const handleSubmit = (e) => {
+        if (e){
+          e.preventDefault();
+        }
+        isValid();
+      }
 
   return (
     <div className='signup_container'>
@@ -63,28 +62,18 @@ const Login = () => {
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={handleSubmit}>
 
-                    {/* Email */}
+                    {/* Ask Security Question */}
                     <div className="form-outline mb-4">
-                      <input type="email" className="form-control" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} required/>
+                      <input type="text" className="form-control" placeholder='Enter you childhood fav song' onChange={(e) => setSecurityAns(e.target.value)} value={securityAns} required/>
                     </div>
 
-                    {/* Password */}
+                    {/* New password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}/>
-                    </div>
-
-                    {/* Forgotten Password */}
-                    <div className="form-outline mb-4 ms-2">
-                      <Link to="/resetPassword">Forgotten Password?</Link>
-                    </div>
-
-                    {/* Signup link */}
-                    <div className="form-outline mb-4 ms-2">
-                      <Link to="/">Do not have account ?</Link>
+                      <input type="text" className="form-control" placeholder='New password' onChange={(e) => setNewPassword(e.target.value)} value={newPassword} required/>
                     </div>
 
                     {/* Signup button */}
-                    <button type="submit" className="btn btn-primary btn-block mb-4 ms-2" >Login</button>
+                    <button type="submit" className="btn btn-primary btn-block mb-4 ms-2" >Go back to login</button>
                   </form>
                 </div>
               </div>
@@ -96,4 +85,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ResetPassword
