@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const Signup = () => {
+
+  // States
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [password, setPassword] = useState("");
+  const [cPass, setCPass] = useState("");
+  const [securityQues, setSecurityQues] = useState("");
+
   return (
     <div>
       <section className="background-radial-gradient overflow-hidden">
@@ -35,26 +48,26 @@ const Signup = () => {
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                          <input type="text" className="form-control" placeholder='First Name' />
+                          <input type="text" className="form-control" placeholder='First Name *' onChange={(e) => setFname(e.target.value)} required />
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                          <input type="text" className="form-control" placeholder='Last Name' />
+                          <input type="text" className="form-control" placeholder='Last Name' onChange={(e) => setLname(e.target.value)} />
                         </div>
                       </div>
                     </div>
 
                     {/* Email */}
                     <div className="form-outline mb-4">
-                      <input type="email" className="form-control" placeholder='Email' required/>
+                      <input type="email" className="form-control" placeholder='Email *' onChange={(e) => setEmail(e.target.value)} required/>
                     </div>
 
                     {/* Country and City */}
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                        <select className="form-select"  required>
+                        <select className="form-select" onChange={(e) => setCountry(e.target.value)}  required>
                             <option defaultValue={"Country"}>Country</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -64,7 +77,7 @@ const Signup = () => {
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                        <select className="form-select" required>
+                        <select className="form-select" onChange={(e) => setState(e.target.value)} required>
                             <option defaultValue={"Country"}>State</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -78,7 +91,7 @@ const Signup = () => {
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                        <select className="form-select" required>
+                        <select className="form-select" onChange={(e) => setCity(e.target.value)} required>
                             <option defaultValue={"Country"}>City</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -88,24 +101,24 @@ const Signup = () => {
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                          <input type="text" className="form-control" placeholder='Pincode' />
+                          <input type="text" className="form-control" placeholder='Pincode' onChange={(e) => setPincode(e.target.value)} />
                         </div>
                       </div>
                     </div>
 
                     {/* Password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Password'/>
+                      <input type="text" className="form-control" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
                     </div>
 
                     {/* Confirm Password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Confirm Password'/>
+                      <input type="text" className="form-control" placeholder='Confirm Password' onChange={(e) => setCPass(e.target.value)}/>
                     </div>
 
                     {/* Security Ques */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Childhood favourite song'/>
+                      <input type="text" className="form-control" placeholder='Childhood favourite song' onChange={(e) => setSecurityQues(e.target.value)}/>
                     </div>
 
                     {/* Login link */}
