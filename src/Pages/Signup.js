@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'; 
 
 const Signup = () => {
 
@@ -7,13 +7,147 @@ const Signup = () => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
+
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
+  const [authToken, setAuthToken] = useState('');
+
   const [pincode, setPincode] = useState("");
   const [password, setPassword] = useState("");
   const [cPass, setCPass] = useState("");
   const [securityQues, setSecurityQues] = useState("");
+
+  // FETCHING COUNTRIES
+  const handleCountry = async () => {
+
+    try {
+      // Get access token
+      const authUrl = "https://www.universal-tutorial.com/api/getaccesstoken";
+      const authResponse = await fetch(authUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "api-token": "EbcZBaFvSV1LDK64_YeqltL8EMsDz_izBHoB0_vQLwab7bxvl7piumpeh8nR_JRs3C0",
+          "user-email": "meghas9910@gmail.com"
+        }
+      });
+      if (!authResponse.ok) {
+        throw new Error('Failed to get access token');
+      }
+      const authData = await authResponse.json();
+      const newAuthToken = authData.auth_token;
+      setAuthToken(newAuthToken);
+
+      // Getting countries
+      const countriesUrl = "https://www.universal-tutorial.com/api/countries";
+      const response = await fetch(countriesUrl, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${newAuthToken}`,
+          "Accept": "application/json"
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch countries');
+      }
+      const data = await response.json();
+      setCountries(data);
+
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+  // FETCHING STATES
+  const handleState = async () => {
+    try {
+      
+      const stateUrl = `https://www.universal-tutorial.com/api/states/${selectedCountry}`
+      const stateRes = await fetch(stateUrl, {
+        method: "GET", 
+        headers: {
+          "Authorization": `Bearer ${authToken}`,
+          "Accept": "application/json"
+        }
+      })
+      
+      if (!stateRes.ok){
+        throw new Error('Failed to fetch states');
+      }
+      const statesData = await stateRes.json();
+
+      setStates(statesData);
+
+    } catch (error) {
+      console.error("Error fetching states: ", error);
+    }
+  }
+
+  // FETCHING CITIES
+  const handleCity = async () => {
+    try {
+      
+      const cityUrl = `https://www.universal-tutorial.com/api/cities/${selectedState}`;
+      const cityRes = await fetch(cityUrl, {
+        method: "GET", 
+        headers: {
+          "Authorization": `Bearer ${authToken}`,
+          "Accept": "application/json"
+        }
+      });
+
+      if (!cityRes.ok){
+        throw new Error("Error fetching cities");
+      }
+      
+      const citiesData = await cityRes.json();
+
+      setCities(citiesData)
+
+    } catch (error) {
+      console.error("Error fetching cities: ", error);
+    }
+  }
+
+  // Handle Country Select
+  const handleCountrySelect = async (event) => {
+    const selectedValue = event.target.value;
+    setSelectedCountry(selectedValue);
+  };
+
+  // Handle State Select
+  const handleStateSelect = async (event) => {
+    const selectedValue = event.target.value;
+    setSelectedState(selectedValue);
+  };
+
+  // Handle City Select
+  const handleCitySelect = async (event) => {
+    const selectedValue = event.target.value;
+    setSelectedCity(selectedValue);
+  };
+  
+  useEffect(() => {
+    handleCountry();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      handleState();
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (selectedState) {
+      handleCity();
+    }
+  }, [selectedState]);
 
   return (
     <div>
@@ -67,21 +201,27 @@ const Signup = () => {
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                        <select className="form-select" onChange={(e) => setCountry(e.target.value)}  required>
+                        <select className="form-select" onChange={handleCountrySelect} value={selectedCountry} required>
                             <option defaultValue={"Country"}>Country</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {countries.map(country => (
+                              <option key={country.country_name} value={country.country_name}>
+                                {country.country_name}
+                              </option>
+                            ))}
                         </select>
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                        <select className="form-select" onChange={(e) => setState(e.target.value)} required>
+                        <select className="form-select" onChange={handleStateSelect} required>
                             <option defaultValue={"Country"}>State</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {
+                              states.map(state => (
+                                <option key={state.state_name} value={state.state_name}>
+                                  {state.state_name}
+                                </option>
+                              ))
+                            }
                         </select>
                         </div>
                       </div>
@@ -91,11 +231,15 @@ const Signup = () => {
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
-                        <select className="form-select" onChange={(e) => setCity(e.target.value)} required>
-                            <option defaultValue={"Country"}>City</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select className="form-select" onChange={handleCitySelect} value={selectedCity} required>
+                            <option defaultValue={"City"}>City</option>
+                            {
+                              cities.map(city => (
+                                <option key={city.city_name} value={city.city_name}>
+                                  {city.city_name}
+                                </option>
+                              ))
+                            }
                         </select>
                         </div>
                       </div>
@@ -108,17 +252,17 @@ const Signup = () => {
 
                     {/* Password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+                      <input type="text" className="form-control" placeholder='Password *' onChange={(e) => setPassword(e.target.value)} required />
                     </div>
 
                     {/* Confirm Password */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Confirm Password' onChange={(e) => setCPass(e.target.value)}/>
+                      <input type="text" className="form-control" placeholder='Confirm Password *' onChange={(e) => setCPass(e.target.value)} required/>
                     </div>
 
                     {/* Security Ques */}
                     <div className="form-outline mb-4">
-                      <input type="text" className="form-control" placeholder='Childhood favourite song' onChange={(e) => setSecurityQues(e.target.value)}/>
+                      <input type="text" className="form-control" placeholder='Childhood favourite song *' onChange={(e) => setSecurityQues(e.target.value)} required/>
                     </div>
 
                     {/* Login link */}
