@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
 
@@ -7,6 +8,7 @@ const HomePage = () => {
   const [dataDisplayed, setDataDisplayed] = useState(allData);
   const [cartNo, setCartNo] = useState(0);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   // UseEffect hook
   useEffect(() => {
@@ -77,7 +79,7 @@ const HomePage = () => {
             </ul>
             <a className="nav-link me-3" href="#">
               <i className="fas fa-shopping-cart"></i>
-              <span className="badge rounded-pill badge-notification bg-danger"> {cartNo} </span>
+              <span className="badge rounded-pill badge-notification bg-danger" onClick={() => navigate("/home/cart")}> {cartNo} </span>
             </a>
             <form className="d-flex" role="search">
               <input className="form-control me-2" type="search" placeholder="Search" onChange={(e) => setSearch(e.target.value)} value={search} aria-label="Search" />
