@@ -6,6 +6,7 @@ const HomePage = () => {
   const [allData, setAllData] = useState([]);
   const [dataDisplayed, setDataDisplayed] = useState(allData);
   const [cartNo, setCartNo] = useState(0);
+  const [search, setSearch] = useState("");
 
   // UseEffect hook
   useEffect(() => {
@@ -46,45 +47,38 @@ const HomePage = () => {
     setCartNo(cartNo + 1);
   }
 
+  // Handle Search
+  const handleSearch = () => {
+    const filteredData = allData.filter((obj) =>
+      obj.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setDataDisplayed(filteredData);
+  }
+
   return (
     <div>
-      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white">
-        <div className="container">
-          <button className="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation" >
-            <i className="fas fa-bars"></i>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">SHOPLANE</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
           </button>
-
-          <div className="collapse navbar-collapse" id="navbarSupportedContent1">
-            <a className="navbar-brand me-auto mb-2 mb-lg-0" href="https://mdbootstrap.com/" >
-              <p className='pt-3'>SHOPLANE</p>
-            </a>
-
-            {/* Navigation bar links */}
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item active me-2">
-                <p className="nav-link" onClick={handleClick}> Home </p>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-3">
+              <li class="nav-item">
+                <p class="nav-link" onClick={handleClick}>Home</p>
               </li>
-              <li className="nav-item active ms-1 me-1">
-                <p className="nav-link" onClick={handleClothingClick}> Clothing </p>
+              <li class="nav-item">
+                <p class="nav-link" onClick={handleClothingClick}>Clothing</p>
               </li>
-              <li className="nav-item active ms-2">
-                <p className="nav-link" onClick={handleAccessoriesClick}> Accessories </p>
+              <li class="nav-item">
+                <p class="nav-link" onClick={handleAccessoriesClick}>Accessories</p>
               </li>
             </ul>
-          </div>
-
-          {/* Navbar items */}
-          <div className="d-flex align-items-center">
-            <form className="w-auto py-1 me-3" style={{ maxWidth: "12rem" }}>
-              <input type="search" className="form-control rounded-0" placeholder="Search" aria-label="Search" />
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" onChange={(e) => setSearch(e.target.value)} value={search} aria-label="Search" />
+              <button class="btn btn-outline-success" type="submit" onClick={handleSearch}>Search</button>
             </form>
-            <a className="nav-link me-3" href="#">
-              <i className="fas fa-shopping-cart"></i>
-              <span className="badge rounded-pill badge-notification bg-danger"> {cartNo} </span>
-            </a>
-            <a className="nav-link me-3" href="#">
-              <i className="fa-solid fa-user"></i>
-            </a>
           </div>
         </div>
       </nav>
@@ -101,8 +95,8 @@ const HomePage = () => {
                     dataDisplayed.map((obj) => {
                       return (
                         <>
-                        <div className="col-lg-3 col-md-6 mb-4 mt-5" key={obj.id}>
-                          <div className="card mt-5">
+                        <div className="col-lg-3 col-md-6 mb-4" key={obj.id}>
+                          <div className="card">
                             <div className="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" >
                               <img src={obj.image} className="w-100" height="300px"/>
                             </div>
