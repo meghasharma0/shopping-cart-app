@@ -1,11 +1,4 @@
-# Shopping Cart app using React app
+# Ecommerce app using ReactJs
 
-### Following setup with signup, login and the combined LoginSignup pages
-
-Login page 
-![login page](images/login.png)
-
-Signup page
-![signup page](images/signup.png)
-
-These two embedded in LoginSignup page
+### Changed the UI using bootstrap
+Used react-router-dom for routing purposes.
