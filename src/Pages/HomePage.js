@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ItemContext } from '../Context/Context';
 
 const HomePage = () => {
 
@@ -9,6 +10,9 @@ const HomePage = () => {
   const [cartNo, setCartNo] = useState(0);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+
+  // Context
+  const cntxt = useContext(ItemContext);
 
   // UseEffect hook
   useEffect(() => {
@@ -42,11 +46,6 @@ const HomePage = () => {
   const handleAccessoriesClick = () => {
     const accessoriesData = allData.filter((obj) => !obj.category.includes("clothing"));
     setDataDisplayed(accessoriesData);
-  }
-
-  // Handle Add to Cart
-  const handleAddToCart = () => {
-    setCartNo(cartNo + 1);
   }
 
   // Handle Search
@@ -110,7 +109,14 @@ const HomePage = () => {
                               <a href="" className="text-reset" style={{textDecoration: "none"}}> <p className="card-title mb-2"><b>{obj.title}</b></p> </a>
                               <a href="" className="text-reset "  style={{textDecoration: "none"}}> <p>{obj.description}</p> </a>
                               <h6 className="mb-3 price">${obj.price}</h6>
-                              <button className="btn btn-primary" onClick={handleAddToCart}> Add to Cart </button>
+                              <button className="btn btn-primary" onClick={() => {
+                                cntxt.setItems([ 
+                                  ...cntxt.items, 
+                                  { id: obj.id, title: obj.title, image: obj.image, description: obj.description, price: obj.price  }
+                                 ]); 
+                                 cntxt.setTotalAmt(cntxt.totalAmt + obj.price);
+                                 setCartNo(cntxt.items.length + 1);
+                              }}> Add to Cart </button>
                             </div>
                           </div>
                         </div>
