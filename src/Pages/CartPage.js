@@ -38,7 +38,7 @@ const CartPage = () => {
                 </div>
 
                 {/* Product Display Container */}
-                <h1>{msg}</h1>
+                <h1>{!cntxt.items ? msg : ""}</h1>
                 <div className="card rounded-3 mb-4">
                 {
                     cntxt.items.map((obj, index, arr) => {
